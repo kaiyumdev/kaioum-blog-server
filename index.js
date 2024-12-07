@@ -11,6 +11,8 @@ mongoose.connect(process.env.MONGO_DB).then(() => {
     console.error('Error connecting to MongoDB:', error)
 })
 const app = express()
+
+app.use(express.json());
 const port = 3000
 
 app.listen(port, () => {

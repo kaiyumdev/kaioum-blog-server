@@ -1,3 +1,3 @@
-export const signup = (req, res) => {
+export const signup = async (req, res) => {
     console.log(req.body);
 }
