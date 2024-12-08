@@ -1,6 +1,7 @@
 import User from '../models/user.model.js';
 import bcryptjs from 'bcryptjs';
 import { errorHadler } from '../utils/error.js';
+import jsw from 'jsonwebtoken';
 
 export const signup = async (req, res, next) => {
     const { username, email, password } = req.body;
@@ -40,8 +41,16 @@ export const signin = async (req, res, next) => {
     }
 
     try {
+        const validUser = await User.findOne({ email });
+        if (!validUser) {
+            next(errorHadler(404, "User not found"));
+        }
+        const validPassword = bcryptjs.compareSync(password, validUser.password);
+        if (!validPassword) {
+            next(errorHadler(400, "Invalid password"));
+        }
 
     } catch (error) {
-
+        next(error);
     }
 }
