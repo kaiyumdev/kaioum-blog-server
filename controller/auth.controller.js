@@ -31,3 +31,17 @@ export const signup = async (req, res, next) => {
         next(error);
     }
 };
+
+export const signin = async (req, res, next) => {
+    const { email, password } = req.body;
+
+    if (!email || !password || email === "" || password === "") {
+        next(errorHadler(400, "All fields are required"));
+    }
+
+    try {
+
+    } catch (error) {
+
+    }
+}
