@@ -60,3 +60,20 @@ export const signin = async (req, res, next) => {
         next(error);
     }
 }
+
+export const google = async (req, res, next) => {
+    const { name, email, googlePhotoUrl } = req.body;
+
+    try {
+        const user = await User.findOne({ email })
+        if (user) {
+            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+            const { password: pass, ...rest } = user._doc;
+            res.status(200).cookie('access_token', token, {
+                httpOnly: true
+            }).json(rest);
+        }
+    } catch (error) {
+        next(error);
+    }
+}
